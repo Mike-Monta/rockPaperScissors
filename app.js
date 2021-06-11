@@ -12,15 +12,11 @@ function createNewBtn(n){
         newBtn.appendChild(newImg);      
     }
 }
-const btnBox = document.querySelector('#btnBox');
-const abajo = document.querySelector('#abajo');
-const score = document.querySelector('#score');
-const options =['rock','paper','scissors'];
-createNewBtn(3);
+
 
 
 //Variables
-
+const options =['rock','paper','scissors'];
 let userScore= 0;
 let computerScore =0;
 let ties = 0;
@@ -29,7 +25,15 @@ let compGameplay = "";
 let gameOn = "off";
 let computerSelection="";
 let playerSelection="";
-let color="";
+
+const btnBox = document.querySelector('#btnBox');
+const abajo = document.querySelector('#abajo');
+const score = document.querySelector('#score');
+const result= document.querySelector('#result');
+const selec = document.querySelector('#select');
+const objMutated=document.querySelector('#roundWinner');
+createNewBtn(3);
+
 
 //Setting click events
 
@@ -39,35 +43,38 @@ buttons.forEach((btn) =>{
             playerSelection= e.target.id; 
             console.log(playerSelection);   
             if (gameOn === "on"){
-              playRound(playerSelection);
+              playaRound(playerSelection);
             }
         });
     });
-const selec = document.querySelector('#select');
+
 const nGBtn =document.querySelector('#nGBtn');
 nGBtn.addEventListener('click',function(e){
         nGBtn.style.visibility='hidden';
         selec.style.visibility='visible';
         resetScores();
-        //document.getElementById('result').setAttribute('visibility', "hidden");
         result.style.visibility="hidden";
-        launchNewGame();
+        gameOn= "on";
+        //launchNewGame();
     });
 
-const objMutated=document.querySelector('#roundWinner');    
-//Game run
+ 
+//function launchNewGame(nRounds) {}
 
-function launchNewGame(nRounds) {
-    gameOn= "on";
-   
+// Computer random gameplay
+function computerPlay(){
+    let alea = Math.floor(Math.random()*3) +1;
+    if (alea === 1) {
+        compGameplay= "rock";
+    }else if (alea === 2){
+        compGameplay = "scissors";
+    }else compGameplay = "paper";
+    return compGameplay;
 }
 
-function playRound (playerSelection){
-    winner = "";
+function playaRound(playerSelection){
     computerSelection= computerPlay();
-    
     console.log("User: " + playerSelection + " -  Computer: "+ computerSelection)
-    
     if (playerSelection === computerSelection){
         ties += 1;
         winnerAnimation("grey");
@@ -107,24 +114,24 @@ function playRound (playerSelection){
         }
     }
 }  
+// Round end events
 function userWinsRound(){
-   ;
     userScore += 1;
     document.getElementById('roundWinner').textContent= "User";
     document.getElementById("userScore").textContent= userScore;
     winnerAnimation("green");
 }
+
 function computerWinsRound(){
-    
     computerScore += 1;
     document.getElementById('roundWinner').textContent= "Computer";
     document.getElementById("computerScore").textContent= computerScore;
     winnerAnimation("red");
 }
+
 function winnerAnimation(col){
-    color=col;
     objMutated.style.transform = "scale(1.2)";
-    objMutated.style.backgroundColor =color;
+    objMutated.style.backgroundColor =col;
     setTimeout(function(){objMutated.style.transform = "scale(1.1)";},500);
 }
 
@@ -136,28 +143,16 @@ function resetScores(){
     computerScore=0;
     ties= 0;
 }
-const result= document.querySelector('#result');
 
 
+// Final winner
 function playerWin(){
     document.getElementById('result').setAttribute('src', "assets/you win.jpg");
     result.style.visibility="visible";
 }
 function computerWin(){
-    //document.getElementById('result').setAttribute('visibility','visible');
+   
     document.getElementById('result').setAttribute('src','assets/you loose.jpg');
     result.style.visibility="visible";
 }
 
-// Computer gameplay
-
-function computerPlay(){
-    let alea = Math.floor(Math.random()*3) +1;
-    if (alea === 1) {
-        compGameplay= "rock";
-    }else if (alea === 2){
-        compGameplay = "scissors";
-    }else compGameplay = "paper";
-    return compGameplay;
-    
-}
