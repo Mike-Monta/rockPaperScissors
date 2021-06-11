@@ -1,11 +1,12 @@
 function createNewBtn(n){
     for (let i=0;i<n ;i++) {
         const newBtn = document.createElement('div');
-        newBtn.classList.add('btn','btn_'+ options[i]);
+        newBtn.classList.add('btnDiv','btnDiv_'+ options[i]);
+        newBtn.id= options[i];
         btnBox.appendChild(newBtn);
         const newImg = document.createElement('img');
         newImg.classList.add('hand','btn_'+ options[i]);
-        newImg.setAttribute('id',options[i]);
+        newImg.setAttribute('id',options[i]+'hand');
         i=== 0 ? newImg.setAttribute('src', 'assets/rock.png')
         : i===1 ? newImg.setAttribute('src', 'assets/paper.png')
         : i===2 ? newImg.setAttribute('src', 'assets/scissors.png'):"" ;
@@ -32,15 +33,18 @@ const score = document.querySelector('#score');
 const result= document.querySelector('#result');
 const selec = document.querySelector('#select');
 const objMutated=document.querySelector('#roundWinner');
+const scoreUser = document.querySelector('#userScore');
+const scoreComputer = document.querySelector('#computerScore');
+const scoreTie = document.querySelector('#ties');
 createNewBtn(3);
 
 
 //Setting click events
 
-const buttons = document.querySelectorAll('.btn');
-buttons.forEach((btn) =>{
-        btn.addEventListener('click',function(e) { 
-            playerSelection= e.target.id; 
+const buttons = document.querySelectorAll('.btnDiv');
+buttons.forEach((btnDiv) =>{
+        btnDiv.addEventListener('click',function(e) { 
+            playerSelection= btnDiv.id; //e.target.id
             console.log(playerSelection);   
             if (gameOn === "on"){
               playaRound(playerSelection);
@@ -54,6 +58,10 @@ nGBtn.addEventListener('click',function(e){
         selec.style.visibility='visible';
         resetScores();
         result.style.visibility="hidden";
+        document.getElementById('rock').style.backgroundColor= "chocolate";
+        document.getElementById('paper').style.backgroundColor= "chocolate";
+        document.getElementById('scissors').style.backgroundColor= "chocolate";
+    
         gameOn= "on";
         //launchNewGame();
     });
@@ -79,7 +87,12 @@ function playaRound(playerSelection){
         ties += 1;
         winnerAnimation("grey");
         document.getElementById('roundWinner').textContent= "It's a tie";
-        document.getElementById("ties").textContent= ties;
+        
+        scoreTie.textContent= ties;
+        scoreTie.style.transform = "scale(1.2)";
+        setTimeout(function(){scoreTie.style.transform = "scale(1)";},500);
+    
+
     }else if  (playerSelection === "rock"){
           if (computerSelection === "scissors"){
             userWinsRound();
@@ -99,6 +112,10 @@ function playaRound(playerSelection){
             computerWinsRound();
         }
     } 
+    
+    document.getElementById(computerSelection).style.backgroundColor= "green";
+    setTimeout(function(){document.getElementById(computerSelection).style.backgroundColor= "chocolate";},500);   
+
     if(userScore === 5 || computerScore ===5 || ties ===5){
         selec.style.visibility='hidden';
         nGBtn.style.visibility='visible';
@@ -118,14 +135,19 @@ function playaRound(playerSelection){
 function userWinsRound(){
     userScore += 1;
     document.getElementById('roundWinner').textContent= "User";
-    document.getElementById("userScore").textContent= userScore;
+    scoreUser.textContent = userScore;
+    scoreUser.style.transform = "scale(1.2)";
+    setTimeout(function(){scoreUser.style.transform = "scale(1)";},500);
     winnerAnimation("green");
+    
 }
 
 function computerWinsRound(){
     computerScore += 1;
     document.getElementById('roundWinner').textContent= "Computer";
-    document.getElementById("computerScore").textContent= computerScore;
+    scoreComputer.textContent= computerScore;
+    scoreComputer.style.transform = "scale(1.2)";
+    setTimeout(function(){scoreComputer.style.transform = "scale(1)";},500);
     winnerAnimation("red");
 }
 
