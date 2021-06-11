@@ -29,6 +29,7 @@ let compGameplay = "";
 let gameOn = "off";
 let computerSelection="";
 let playerSelection="";
+let color="";
 
 //Setting click events
 
@@ -52,6 +53,8 @@ nGBtn.addEventListener('click',function(e){
         result.style.visibility="hidden";
         launchNewGame();
     });
+
+const objMutated=document.querySelector('#roundWinner');    
 //Game run
 
 function launchNewGame(nRounds) {
@@ -67,6 +70,7 @@ function playRound (playerSelection){
     
     if (playerSelection === computerSelection){
         ties += 1;
+        winnerAnimation("grey");
         document.getElementById('roundWinner').textContent= "It's a tie";
         document.getElementById("ties").textContent= ties;
     }else if  (playerSelection === "rock"){
@@ -104,15 +108,26 @@ function playRound (playerSelection){
     }
 }  
 function userWinsRound(){
+   ;
     userScore += 1;
     document.getElementById('roundWinner').textContent= "User";
     document.getElementById("userScore").textContent= userScore;
+    winnerAnimation("green");
 }
 function computerWinsRound(){
+    
     computerScore += 1;
     document.getElementById('roundWinner').textContent= "Computer";
     document.getElementById("computerScore").textContent= computerScore;
+    winnerAnimation("red");
 }
+function winnerAnimation(col){
+    color=col;
+    objMutated.style.transform = "scale(1.2)";
+    objMutated.style.backgroundColor =color;
+    setTimeout(function(){objMutated.style.transform = "scale(1.1)";},500);
+}
+
 function resetScores(){
     document.getElementById("userScore").textContent= 0;
     document.getElementById("computerScore").textContent= 0;

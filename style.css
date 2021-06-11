@@ -109,6 +109,14 @@ body{
 }
 #roundWinner{
     background-color: darkgrey;
+    transition: transform 0.3s;
+    transition-duration: 0.3;
+     
+    
+}
+#roundWinner:hover{
+    background-color: darkgrey;
+    transform: scale(1.5);   
 }
 
 .result{
@@ -120,4 +128,8 @@ body{
     visibility: hidden;
     z-index: 0;
     
+}
+footer{
+    text-align: center;
+    padding-top: 60px ;
 }
