@@ -132,7 +132,7 @@ function computerWinsRound(){
 function winnerAnimation(col){
     objMutated.style.transform = "scale(1.2)";
     objMutated.style.backgroundColor =col;
-    setTimeout(function(){objMutated.style.transform = "scale(1.1)";},500);
+    setTimeout(function(){objMutated.style.transform = "scale(1)";},500);
 }
 
 function resetScores(){
